@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { MODEL_ORDER, MODEL_CONFIGS } from '../constants'
+import { MODEL_ORDER, MODEL_CONFIGS, DEFAULT_DURATION } from '../constants'
 import type { ModelName, NumberFormat } from '../constants'
 import { generateNumbers } from '../utils/numberGenerator'
 import { randomFormat } from '../utils/numberFormat'
@@ -62,7 +62,7 @@ export function GamePage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
       <div className="mb-8">
-        <CountdownTimer onComplete={handleTimerComplete} />
+        <CountdownTimer duration={DEFAULT_DURATION} onComplete={handleTimerComplete} />
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl">

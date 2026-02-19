@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
-import { GAME_DURATION_SECONDS } from '../constants'
 
 interface CountdownTimerProps {
+  duration: number
   onComplete: () => void
 }
 
-export function CountdownTimer({ onComplete }: CountdownTimerProps) {
-  const [remaining, setRemaining] = useState(GAME_DURATION_SECONDS)
+export function CountdownTimer({ duration, onComplete }: CountdownTimerProps) {
+  const [remaining, setRemaining] = useState(duration)
   const onCompleteRef = useRef(onComplete)
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function CountdownTimer({ onComplete }: CountdownTimerProps) {
     return () => clearTimeout(timer)
   }, [remaining])
 
-  const percentage = (remaining / GAME_DURATION_SECONDS) * 100
+  const percentage = (remaining / duration) * 100
 
   return (
     <div className="w-full max-w-md mx-auto">

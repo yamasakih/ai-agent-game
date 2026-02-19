@@ -53,4 +53,6 @@ export const MODEL_CONFIGS: Record<ModelName, ModelConfig> = {
 
 export const MODEL_ORDER: ModelName[] = ['Human', 'Opus', 'Sonnet', 'Haiku']
 
-export const GAME_DURATION_SECONDS = 10
+export const DEFAULT_DURATION = 10
+export const MIN_DURATION = 5
+export const MAX_DURATION = 30
