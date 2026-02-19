@@ -11,7 +11,9 @@ const ANIMATIONS = [
 interface NumberDisplayProps {
   value: number
   format: NumberFormat
-  colorClass: string
+  color: string
+  x: number
+  y: number
   animationDelay: number
   animationIndex: number
   rotation: number
@@ -21,7 +23,9 @@ interface NumberDisplayProps {
 export function NumberDisplay({
   value,
   format,
-  colorClass,
+  color,
+  x,
+  y,
   animationDelay,
   animationIndex,
   rotation,
@@ -32,11 +36,14 @@ export function NumberDisplay({
 
   return (
     <div
-      className={`${animation} ${colorClass} font-bold select-none`}
+      className={`${animation} font-bold select-none absolute`}
       style={{
+        color,
         fontSize: `${1.5 + scale}rem`,
         transform: `rotate(${rotation}deg)`,
         animationDelay: `${animationDelay * 0.2}s`,
+        left: `${x}%`,
+        top: `${y}%`,
       }}
     >
       {displayText}

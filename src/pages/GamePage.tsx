@@ -4,6 +4,7 @@ import { MODEL_ORDER, MODEL_CONFIGS, DEFAULT_DURATION } from '../constants'
 import type { ModelName, NumberFormat } from '../constants'
 import { generateNumbers } from '../utils/numberGenerator'
 import { randomFormat } from '../utils/numberFormat'
+import { generateRandomColor } from '../utils/colorGenerator'
 import { NumberDisplay } from '../components/NumberDisplay'
 import { CountdownTimer } from '../components/CountdownTimer'
 
@@ -14,6 +15,9 @@ interface GeneratedNumber {
   animationIndex: number
   rotation: number
   scale: number
+  x: number
+  y: number
+  color: string
 }
 
 function buildNumbers(searchParams: URLSearchParams): GeneratedNumber[] {
@@ -32,6 +36,9 @@ function buildNumbers(searchParams: URLSearchParams): GeneratedNumber[] {
         animationIndex: Math.floor(Math.random() * 4),
         rotation: Math.floor(Math.random() * 30) - 15,
         scale: 0.8 + Math.random() * 0.8,
+        x: 5 + Math.random() * 85,
+        y: 5 + Math.random() * 80,
+        color: generateRandomColor(),
       })
     }
   }
@@ -45,11 +52,18 @@ function buildNumbers(searchParams: URLSearchParams): GeneratedNumber[] {
   return result
 }
 
+function parseDuration(searchParams: URLSearchParams): number {
+  const raw = parseInt(searchParams.get('duration') ?? '', 10)
+  if (Number.isNaN(raw)) return DEFAULT_DURATION
+  return Math.max(5, Math.min(30, raw))
+}
+
 export function GamePage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
   const [numbers] = useState(() => buildNumbers(searchParams))
+  const duration = parseDuration(searchParams)
 
   const handleTimerComplete = useCallback(() => {
     const data = numbers.map((n) => ({
@@ -60,18 +74,20 @@ export function GamePage() {
   }, [numbers, navigate])
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
-      <div className="mb-8">
-        <CountdownTimer duration={DEFAULT_DURATION} onComplete={handleTimerComplete} />
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col p-4">
+      <div className="mx-auto mb-4">
+        <CountdownTimer duration={duration} onComplete={handleTimerComplete} />
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl">
+      <div className="relative flex-1 w-full">
         {numbers.map((num, index) => (
           <NumberDisplay
             key={index}
             value={num.value}
             format={num.format}
-            colorClass={MODEL_CONFIGS[num.model].textColor}
+            color={num.color}
+            x={num.x}
+            y={num.y}
             animationDelay={index}
             animationIndex={num.animationIndex}
             rotation={num.rotation}
