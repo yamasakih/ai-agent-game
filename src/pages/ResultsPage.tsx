@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { MODEL_ORDER, MODEL_CONFIGS } from '../constants'
 import type { ModelName } from '../constants'
 
@@ -7,10 +7,34 @@ interface ResultNumber {
   model: ModelName
 }
 
+const MODEL_NAMES = new Set<string>(MODEL_ORDER)
+
+function isResultNumber(item: unknown): item is ResultNumber {
+  if (typeof item !== 'object' || item === null) return false
+  const obj = item as Record<string, unknown>
+  return (
+    typeof obj.value === 'number' &&
+    typeof obj.model === 'string' &&
+    MODEL_NAMES.has(obj.model)
+  )
+}
+
+function parseNumbers(state: unknown): ResultNumber[] | null {
+  if (typeof state !== 'object' || state === null) return null
+  const obj = state as Record<string, unknown>
+  if (!Array.isArray(obj.numbers)) return null
+  if (!obj.numbers.every(isResultNumber)) return null
+  return obj.numbers
+}
+
 export function ResultsPage() {
   const location = useLocation()
   const navigate = useNavigate()
-  const numbers: ResultNumber[] = location.state?.numbers ?? []
+  const numbers = parseNumbers(location.state)
+
+  if (numbers === null) {
+    return <Navigate to="/" replace />
+  }
 
   const grouped = MODEL_ORDER.map((model) => ({
     model,
