@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MODEL_ORDER, MODEL_CONFIGS } from '../constants'
+import { MODEL_ORDER, MODEL_CONFIGS, DEFAULT_DURATION, MIN_DURATION, MAX_DURATION } from '../constants'
 import type { ModelName } from '../constants'
 import { ModelRow } from '../components/ModelRow'
 
@@ -12,6 +12,7 @@ export function TopPage() {
     Sonnet: 0,
     Haiku: 0,
   })
+  const [duration, setDuration] = useState(DEFAULT_DURATION)
 
   const handleSelect = (model: ModelName, count: number) => {
     setSelections((prev) => ({ ...prev, [model]: count }))
@@ -25,6 +26,7 @@ export function TopPage() {
     for (const model of MODEL_ORDER) {
       params.set(model, String(selections[model]))
     }
+    params.set('duration', String(duration))
     navigate(`/game?${params.toString()}`)
   }
 
@@ -41,6 +43,26 @@ export function TopPage() {
           />
         ))}
       </div>
+
+      <div className="mb-8 w-full max-w-xs">
+        <label className="block text-sm font-bold text-gray-300 mb-2 text-center">
+          Time Limit: {duration}s
+        </label>
+        <input
+          type="range"
+          min={MIN_DURATION}
+          max={MAX_DURATION}
+          step={1}
+          value={duration}
+          onChange={(e) => setDuration(Number(e.target.value))}
+          className="w-full accent-amber-500"
+        />
+        <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <span>{MIN_DURATION}s</span>
+          <span>{MAX_DURATION}s</span>
+        </div>
+      </div>
+
       <button
         onClick={handleStart}
         disabled={!hasAtLeastOneModel}
