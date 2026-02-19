@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { MODEL_ORDER, MODEL_CONFIGS } from '../constants'
 import type { ModelName, NumberFormat } from '../constants'
@@ -11,37 +11,45 @@ interface GeneratedNumber {
   value: number
   format: NumberFormat
   model: ModelName
+  animationIndex: number
+  rotation: number
+  scale: number
+}
+
+function buildNumbers(searchParams: URLSearchParams): GeneratedNumber[] {
+  const result: GeneratedNumber[] = []
+
+  for (const model of MODEL_ORDER) {
+    const count = parseInt(searchParams.get(model) ?? '0', 10)
+    const config = MODEL_CONFIGS[model]
+    const values = generateNumbers(count, config.min, config.max)
+
+    for (const value of values) {
+      result.push({
+        value,
+        format: randomFormat(),
+        model,
+        animationIndex: Math.floor(Math.random() * 4),
+        rotation: Math.floor(Math.random() * 30) - 15,
+        scale: 0.8 + Math.random() * 0.8,
+      })
+    }
+  }
+
+  // シャッフル
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+
+  return result
 }
 
 export function GamePage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  const numbers = useMemo(() => {
-    const result: GeneratedNumber[] = []
-
-    for (const model of MODEL_ORDER) {
-      const count = parseInt(searchParams.get(model) ?? '0', 10)
-      const config = MODEL_CONFIGS[model]
-      const values = generateNumbers(count, config.min, config.max)
-
-      for (const value of values) {
-        result.push({
-          value,
-          format: randomFormat(),
-          model,
-        })
-      }
-    }
-
-    // シャッフル
-    for (let i = result.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[result[i], result[j]] = [result[j], result[i]]
-    }
-
-    return result
-  }, [searchParams])
+  const [numbers] = useState(() => buildNumbers(searchParams))
 
   const handleTimerComplete = useCallback(() => {
     const data = numbers.map((n) => ({
@@ -65,6 +73,9 @@ export function GamePage() {
             format={num.format}
             colorClass={MODEL_CONFIGS[num.model].textColor}
             animationDelay={index}
+            animationIndex={num.animationIndex}
+            rotation={num.rotation}
+            scale={num.scale}
           />
         ))}
       </div>

@@ -1,22 +1,21 @@
-import { useMemo } from 'react'
 import type { NumberFormat } from '../constants'
 import { formatNumber } from '../utils/numberFormat'
+
+const ANIMATIONS = [
+  'animate-blink',
+  'animate-wobble',
+  'animate-spin-slow',
+  'animate-drift',
+]
 
 interface NumberDisplayProps {
   value: number
   format: NumberFormat
   colorClass: string
   animationDelay: number
-}
-
-function randomAnimation(): string {
-  const animations = [
-    'animate-blink',
-    'animate-wobble',
-    'animate-spin-slow',
-    'animate-drift',
-  ]
-  return animations[Math.floor(Math.random() * animations.length)]
+  animationIndex: number
+  rotation: number
+  scale: number
 }
 
 export function NumberDisplay({
@@ -24,22 +23,19 @@ export function NumberDisplay({
   format,
   colorClass,
   animationDelay,
+  animationIndex,
+  rotation,
+  scale,
 }: NumberDisplayProps) {
-  const animation = useMemo(() => randomAnimation(), [])
   const displayText = formatNumber(value, format)
-
-  const randomRotation = useMemo(
-    () => Math.floor(Math.random() * 30) - 15,
-    [],
-  )
-  const randomScale = useMemo(() => 0.8 + Math.random() * 0.8, [])
+  const animation = ANIMATIONS[animationIndex % ANIMATIONS.length]
 
   return (
     <div
       className={`${animation} ${colorClass} font-bold select-none`}
       style={{
-        fontSize: `${1.5 + randomScale}rem`,
-        transform: `rotate(${randomRotation}deg)`,
+        fontSize: `${1.5 + scale}rem`,
+        transform: `rotate(${rotation}deg)`,
         animationDelay: `${animationDelay * 0.2}s`,
       }}
     >
