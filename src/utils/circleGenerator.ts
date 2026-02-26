@@ -18,8 +18,12 @@ export interface ExclusionZone {
 
 const MIN_RADIUS = 24
 const MAX_RADIUS = 48
-const POSITION_MIN = 0
-const POSITION_MAX = 100
+// 円が画面端で見切れないようマージンを確保
+// コンテナ844×430想定: 横6%(≈51px), 縦12%(≈52px) > 最大半径48px
+const POSITION_X_MIN = 6
+const POSITION_X_MAX = 94
+const POSITION_Y_MIN = 12
+const POSITION_Y_MAX = 88
 const CANDIDATE_COUNT = 20
 
 function randomInRange(min: number, max: number): number {
@@ -42,8 +46,8 @@ function findBestPosition(
   let bestMinDistance = -1
 
   for (let i = 0; i < CANDIDATE_COUNT; i++) {
-    const x = randomInRange(POSITION_MIN, POSITION_MAX)
-    const y = randomInRange(POSITION_MIN, POSITION_MAX)
+    const x = randomInRange(POSITION_X_MIN, POSITION_X_MAX)
+    const y = randomInRange(POSITION_Y_MIN, POSITION_Y_MAX)
 
     if (isInExclusionZone(x, y, exclusionZones)) continue
 

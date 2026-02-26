@@ -24,22 +24,22 @@ describe('generateCircles', () => {
     expect(circles.map((c) => c.number)).toEqual([1, 2, 3, 4, 5])
   })
 
-  it('x座標が0〜100の範囲内である', () => {
+  it('x座標がマージン込みの範囲内(6〜94)である', () => {
     for (let i = 0; i < 50; i++) {
       const circles = generateCircles(10)
       for (const circle of circles) {
-        expect(circle.x).toBeGreaterThanOrEqual(0)
-        expect(circle.x).toBeLessThanOrEqual(100)
+        expect(circle.x).toBeGreaterThanOrEqual(6)
+        expect(circle.x).toBeLessThanOrEqual(94)
       }
     }
   })
 
-  it('y座標が0〜100の範囲内である', () => {
+  it('y座標がマージン込みの範囲内(12〜88)である', () => {
     for (let i = 0; i < 50; i++) {
       const circles = generateCircles(10)
       for (const circle of circles) {
-        expect(circle.y).toBeGreaterThanOrEqual(0)
-        expect(circle.y).toBeLessThanOrEqual(100)
+        expect(circle.y).toBeGreaterThanOrEqual(12)
+        expect(circle.y).toBeLessThanOrEqual(88)
       }
     }
   })
