@@ -18,12 +18,11 @@ export interface ExclusionZone {
 
 const MIN_RADIUS = 24
 const MAX_RADIUS = 48
-// 円が画面端で見切れないようマージンを確保
-// コンテナ844×430想定: 横6%(≈51px), 縦12%(≈52px) > 最大半径48px
-const POSITION_X_MIN = 6
-const POSITION_X_MAX = 94
-const POSITION_Y_MIN = 12
-const POSITION_Y_MAX = 88
+// 円の数字が読めるよう端から少しマージンを確保
+const POSITION_X_MIN = 3
+const POSITION_X_MAX = 97
+const POSITION_Y_MIN = 6
+const POSITION_Y_MAX = 94
 const CANDIDATE_COUNT = 20
 
 function randomInRange(min: number, max: number): number {
