@@ -41,10 +41,14 @@ function findBestPosition(
   existing: CircleData[],
   exclusionZones: ExclusionZone[],
 ): { x: number; y: number } {
-  let bestCandidate = { x: 0, y: 0 }
+  let bestCandidate = {
+    x: (POSITION_X_MIN + POSITION_X_MAX) / 2,
+    y: (POSITION_Y_MIN + POSITION_Y_MAX) / 2,
+  }
   let bestMinDistance = -1
 
-  for (let i = 0; i < CANDIDATE_COUNT; i++) {
+  // 除外ゾーンで弾かれる分を考慮し多めに試行
+  for (let i = 0; i < CANDIDATE_COUNT * 5; i++) {
     const x = randomInRange(POSITION_X_MIN, POSITION_X_MAX)
     const y = randomInRange(POSITION_Y_MIN, POSITION_Y_MAX)
 

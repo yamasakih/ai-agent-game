@@ -80,8 +80,7 @@ export function CountUpGamePage() {
       if (finishedRef.current) return
 
       if (number === nextExpected) {
-        const newStates = { ...circleStates, [number]: 'completed' as CircleState }
-        setCircleStates(newStates)
+        setCircleStates((prev) => ({ ...prev, [number]: 'completed' as CircleState }))
         const newNext = nextExpected + 1
         setNextExpected(newNext)
 
@@ -100,7 +99,7 @@ export function CountUpGamePage() {
         }, WRONG_RESET_DELAY_MS)
       }
     },
-    [nextExpected, circleStates, circles.length, handleSuccess],
+    [nextExpected, circles.length, handleSuccess],
   )
 
   return (
