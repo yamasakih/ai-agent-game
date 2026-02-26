@@ -6,6 +6,8 @@ import { ResultsPage } from './pages/ResultsPage'
 import { CountUpSetupPage } from './pages/count-up/CountUpSetupPage'
 import { CountUpGamePage } from './pages/count-up/CountUpGamePage'
 import { CountUpResultsPage } from './pages/count-up/CountUpResultsPage'
+import { DiceRollSetupPage } from './pages/dice-roll/DiceRollSetupPage'
+import { DiceRollGamePage } from './pages/dice-roll/DiceRollGamePage'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <Route path="/count-up" element={<CountUpSetupPage />} />
             <Route path="/count-up/game" element={<CountUpGamePage />} />
             <Route path="/count-up/results" element={<CountUpResultsPage />} />
+            <Route path="/dice-roll" element={<DiceRollSetupPage />} />
+            <Route path="/dice-roll/game" element={<DiceRollGamePage />} />
           </Routes>
         </BrowserRouter>
       </div>

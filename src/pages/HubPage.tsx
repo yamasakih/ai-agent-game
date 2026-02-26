@@ -15,6 +15,13 @@ const GAMES = [
     icon: '⏱',
     color: 'from-cyan-500 to-blue-600',
   },
+  {
+    title: 'Dice Roll',
+    description: '多面体ダイスを振れ！d6〜d20のダイスをモデル別に振って合計値を出そう',
+    path: '/dice-roll',
+    icon: '🎲',
+    color: 'from-red-500 to-rose-600',
+  },
 ] as const
 
 export function HubPage() {
@@ -25,7 +32,7 @@ export function HubPage() {
       <h1 className="text-3xl font-bold mb-2">Board Game Challenge</h1>
       <p className="text-gray-400 mb-10">ゲームを選んでチャレンジ！</p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-2xl">
         {GAMES.map((game) => (
           <button
             key={game.path}
