@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { MODEL_ORDER, COUNT_UP_MODEL_CONFIGS, DEFAULT_DURATION, MIN_DURATION, MAX_DURATION } from '../../constants'
 import { generateCircles, calculateTotalCircles } from '../../utils/circleGenerator'
+import type { ExclusionZone } from '../../utils/circleGenerator'
 import { CountdownTimer } from '../../components/CountdownTimer'
 import { Circle } from '../../components/Circle'
 import type { CircleState } from '../../components/Circle'
@@ -24,6 +25,8 @@ function parseDuration(searchParams: URLSearchParams): number {
   return Math.max(MIN_DURATION, Math.min(MAX_DURATION, raw))
 }
 
+const TIMER_EXCLUSION_ZONE: ExclusionZone = { xMin: 20, xMax: 80, yMin: 0, yMax: 25 }
+
 const WRONG_RESET_DELAY_MS = 400
 
 export function CountUpGamePage() {
@@ -39,7 +42,7 @@ export function CountUpGamePage() {
   const [circles] = useState(() => {
     const selections = parseSelections(searchParams)
     const totalCount = calculateTotalCircles(selections, COUNT_UP_MODEL_CONFIGS)
-    return generateCircles(totalCount)
+    return generateCircles(totalCount, [TIMER_EXCLUSION_ZONE])
   })
 
   const duration = parseDuration(searchParams)
@@ -101,16 +104,15 @@ export function CountUpGamePage() {
   )
 
   return (
-    <div className="min-h-full bg-gray-900 text-white flex flex-col p-4">
-      <div className="mx-auto mb-4">
+    <div className="min-h-full bg-gray-900 text-white relative overflow-hidden">
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10">
         <CountdownTimer duration={duration} onComplete={handleTimerComplete} />
+        <div className="text-center text-sm text-gray-400 mt-1">
+          Next: <span className="text-white font-bold text-lg">{nextExpected}</span> / {circles.length}
+        </div>
       </div>
 
-      <div className="text-center text-sm text-gray-400 mb-2">
-        Next: <span className="text-white font-bold text-lg">{nextExpected}</span> / {circles.length}
-      </div>
-
-      <div className="relative flex-1 w-full">
+      <div className="absolute inset-0">
         {circles.map((circle) => (
           <Circle
             key={circle.number}
@@ -118,6 +120,7 @@ export function CountUpGamePage() {
             x={circle.x}
             y={circle.y}
             radius={circle.radius}
+            color={circle.color}
             state={circleStates[circle.number]}
             onTap={handleTap}
           />

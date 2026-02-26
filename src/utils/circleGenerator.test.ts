@@ -53,6 +53,25 @@ describe('generateCircles', () => {
       }
     }
   })
+
+  it('各円にHSL形式の色が付与される', () => {
+    const circles = generateCircles(5)
+    for (const circle of circles) {
+      expect(circle.color).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/)
+    }
+  })
+
+  it('除外ゾーン内に円が配置されない', () => {
+    const exclusionZones = [{ xMin: 20, xMax: 80, yMin: 0, yMax: 25 }]
+    for (let i = 0; i < 50; i++) {
+      const circles = generateCircles(10, exclusionZones)
+      for (const circle of circles) {
+        const inZone =
+          circle.x >= 20 && circle.x <= 80 && circle.y >= 0 && circle.y <= 25
+        expect(inZone).toBe(false)
+      }
+    }
+  })
 })
 
 describe('calculateTotalCircles', () => {

@@ -1,10 +1,19 @@
 import type { CountUpModelConfig, ModelName } from '../constants'
+import { generateRandomColor } from './colorGenerator'
 
 export interface CircleData {
   number: number
   x: number
   y: number
   radius: number
+  color: string
+}
+
+export interface ExclusionZone {
+  xMin: number
+  xMax: number
+  yMin: number
+  yMax: number
 }
 
 const MIN_RADIUS = 24
@@ -21,11 +30,14 @@ function distance(x1: number, y1: number, x2: number, y2: number): number {
   return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 }
 
-function findBestPosition(existing: CircleData[]): { x: number; y: number } {
-  if (existing.length === 0) {
-    return { x: randomInRange(POSITION_MIN, POSITION_MAX), y: randomInRange(POSITION_MIN, POSITION_MAX) }
-  }
+function isInExclusionZone(x: number, y: number, zones: ExclusionZone[]): boolean {
+  return zones.some((z) => x >= z.xMin && x <= z.xMax && y >= z.yMin && y <= z.yMax)
+}
 
+function findBestPosition(
+  existing: CircleData[],
+  exclusionZones: ExclusionZone[],
+): { x: number; y: number } {
   let bestCandidate = { x: 0, y: 0 }
   let bestMinDistance = -1
 
@@ -33,7 +45,12 @@ function findBestPosition(existing: CircleData[]): { x: number; y: number } {
     const x = randomInRange(POSITION_MIN, POSITION_MAX)
     const y = randomInRange(POSITION_MIN, POSITION_MAX)
 
-    const minDist = Math.min(...existing.map((c) => distance(x, y, c.x, c.y)))
+    if (isInExclusionZone(x, y, exclusionZones)) continue
+
+    const minDist =
+      existing.length === 0
+        ? Infinity
+        : Math.min(...existing.map((c) => distance(x, y, c.x, c.y)))
 
     if (minDist > bestMinDistance) {
       bestMinDistance = minDist
@@ -44,16 +61,20 @@ function findBestPosition(existing: CircleData[]): { x: number; y: number } {
   return bestCandidate
 }
 
-export function generateCircles(totalCount: number): CircleData[] {
+export function generateCircles(
+  totalCount: number,
+  exclusionZones: ExclusionZone[] = [],
+): CircleData[] {
   const circles: CircleData[] = []
 
   for (let i = 0; i < totalCount; i++) {
-    const { x, y } = findBestPosition(circles)
+    const { x, y } = findBestPosition(circles, exclusionZones)
     circles.push({
       number: i + 1,
       x,
       y,
       radius: randomInRange(MIN_RADIUS, MAX_RADIUS),
+      color: generateRandomColor(),
     })
   }
 

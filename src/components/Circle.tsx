@@ -5,12 +5,12 @@ interface CircleProps {
   x: number
   y: number
   radius: number
+  color: string
   state: CircleState
   onTap: (number: number) => void
 }
 
-export function Circle({ number, x, y, radius, state, onTap }: CircleProps) {
-  const isPending = state === 'pending'
+export function Circle({ number, x, y, radius, color, state, onTap }: CircleProps) {
   const isCompleted = state === 'completed'
   const isWrong = state === 'wrong'
 
@@ -29,15 +29,16 @@ export function Circle({ number, x, y, radius, state, onTap }: CircleProps) {
           disabled={isCompleted}
           className={`rounded-full flex items-center justify-center font-bold text-white select-none transition-all duration-200 ${
             isCompleted
-              ? 'bg-green-600 opacity-40 cursor-default'
-              : isPending
-                ? 'bg-sky-600 hover:bg-sky-500 cursor-pointer shadow-lg hover:shadow-xl active:scale-95'
-                : 'bg-red-500 cursor-pointer'
+              ? 'opacity-40 cursor-default'
+              : isWrong
+                ? 'cursor-pointer'
+                : 'cursor-pointer shadow-lg hover:shadow-xl active:scale-95 hover:brightness-110'
           }`}
           style={{
             width: `${radius * 2}px`,
             height: `${radius * 2}px`,
             fontSize: `${radius * 0.6}px`,
+            backgroundColor: isCompleted ? '#16a34a' : isWrong ? '#ef4444' : color,
           }}
         >
           {isCompleted ? '✓' : number}
