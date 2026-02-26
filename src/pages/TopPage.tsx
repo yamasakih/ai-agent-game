@@ -27,7 +27,7 @@ export function TopPage() {
       params.set(model, String(selections[model]))
     }
     params.set('duration', String(duration))
-    navigate(`/game?${params.toString()}`)
+    navigate(`/number-reading/game?${params.toString()}`)
   }
 
   return (

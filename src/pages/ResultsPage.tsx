@@ -33,7 +33,7 @@ export function ResultsPage() {
   const numbers = parseNumbers(location.state)
 
   if (numbers === null) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/number-reading" replace />
   }
 
   const grouped = MODEL_ORDER.map((model) => ({
@@ -73,7 +73,7 @@ export function ResultsPage() {
         onClick={() => navigate('/')}
         className="px-8 py-3 rounded-xl text-lg font-bold bg-gray-700 hover:bg-gray-600 text-white transition-all duration-200 cursor-pointer"
       >
-        Back
+        Home
       </button>
     </div>
   )

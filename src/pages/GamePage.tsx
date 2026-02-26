@@ -98,7 +98,7 @@ export function GamePage() {
       value: n.value,
       model: n.model,
     }))
-    navigate('/results', { state: { numbers: data } })
+    navigate('/number-reading/results', { state: { numbers: data } })
   }, [numbers, navigate])
 
   return (

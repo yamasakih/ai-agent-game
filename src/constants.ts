@@ -53,6 +53,55 @@ export const MODEL_CONFIGS: Record<ModelName, ModelConfig> = {
 
 export const MODEL_ORDER: ModelName[] = ['Human', 'Opus', 'Sonnet', 'Haiku']
 
+export interface CountUpModelConfig {
+  name: ModelName
+  color: string
+  textColor: string
+  addMin: number
+  addMax: number
+  minCount: number
+  maxCount: number
+}
+
+export const COUNT_UP_MODEL_CONFIGS: Record<ModelName, CountUpModelConfig> = {
+  Human: {
+    name: 'Human',
+    color: 'bg-gray-500',
+    textColor: 'text-gray-300',
+    addMin: 5,
+    addMax: 5,
+    minCount: 1,
+    maxCount: 1,
+  },
+  Opus: {
+    name: 'Opus',
+    color: 'bg-purple-600',
+    textColor: 'text-purple-400',
+    addMin: 1,
+    addMax: 3,
+    minCount: 0,
+    maxCount: 5,
+  },
+  Sonnet: {
+    name: 'Sonnet',
+    color: 'bg-blue-600',
+    textColor: 'text-blue-400',
+    addMin: 3,
+    addMax: 6,
+    minCount: 0,
+    maxCount: 5,
+  },
+  Haiku: {
+    name: 'Haiku',
+    color: 'bg-green-600',
+    textColor: 'text-green-400',
+    addMin: 5,
+    addMax: 8,
+    minCount: 0,
+    maxCount: 5,
+  },
+}
+
 export const DEFAULT_DURATION = 10
 export const MIN_DURATION = 5
 export const MAX_DURATION = 30
