@@ -49,7 +49,7 @@ describe('generateCircles', () => {
       const circles = generateCircles(10)
       for (const circle of circles) {
         expect(circle.radius).toBeGreaterThanOrEqual(20)
-        expect(circle.radius).toBeLessThanOrEqual(56)
+        expect(circle.radius).toBeLessThanOrEqual(72)
       }
     }
   })

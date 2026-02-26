@@ -17,7 +17,7 @@ export interface ExclusionZone {
 }
 
 const MIN_RADIUS = 20
-const MAX_RADIUS = 56
+const MAX_RADIUS = 72
 // 円の数字が読めるよう端から少しマージンを確保
 const POSITION_X_MIN = 3
 const POSITION_X_MAX = 97
