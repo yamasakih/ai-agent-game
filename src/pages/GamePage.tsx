@@ -102,7 +102,7 @@ export function GamePage() {
   }, [numbers, navigate])
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col p-4">
+    <div className="min-h-full bg-gray-900 text-white flex flex-col p-4">
       <div className="mx-auto mb-4">
         <CountdownTimer duration={duration} onComplete={handleTimerComplete} />
       </div>

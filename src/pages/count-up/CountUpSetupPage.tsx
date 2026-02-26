@@ -28,7 +28,7 @@ export function CountUpSetupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4">
       <h1 className="text-2xl font-bold mb-8">Count Up Challenge</h1>
       <div className="flex flex-col gap-4 mb-8">
         {MODEL_ORDER.map((model) => (

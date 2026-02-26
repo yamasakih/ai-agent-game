@@ -21,7 +21,7 @@ export function HubPage() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-2">Board Game Challenge</h1>
       <p className="text-gray-400 mb-10">ゲームを選んでチャレンジ！</p>
 

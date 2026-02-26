@@ -46,7 +46,7 @@ export function ResultsPage() {
   })).filter((group) => group.values.length > 0)
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4">
       <h1 className="text-2xl font-bold mb-8">Results</h1>
 
       <div className="flex flex-col gap-6 mb-8 w-full max-w-md">

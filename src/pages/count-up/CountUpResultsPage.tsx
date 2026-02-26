@@ -37,7 +37,7 @@ export function CountUpResultsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4">
       {result.success ? (
         <>
           <div className="text-6xl mb-4">🎉</div>
