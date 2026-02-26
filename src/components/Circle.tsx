@@ -6,12 +6,14 @@ interface CircleProps {
   y: number
   radius: number
   color: string
+  zIndex: number
   state: CircleState
   onTap: (number: number) => void
 }
 
-export function Circle({ number, x, y, radius, color, state, onTap }: CircleProps) {
-  const isCompleted = state === 'completed'
+export function Circle({ number, x, y, radius, color, zIndex, state, onTap }: CircleProps) {
+  if (state === 'completed') return null
+
   const isWrong = state === 'wrong'
 
   return (
@@ -21,27 +23,25 @@ export function Circle({ number, x, y, radius, color, state, onTap }: CircleProp
         left: `${x}%`,
         top: `${y}%`,
         transform: 'translate(-50%, -50%)',
+        zIndex,
       }}
     >
       <div className={isWrong ? 'animate-shake' : ''}>
         <button
           onClick={() => onTap(number)}
-          disabled={isCompleted}
-          className={`rounded-full flex items-center justify-center font-bold text-white select-none transition-all duration-200 ${
-            isCompleted
-              ? 'opacity-40 cursor-default'
-              : isWrong
-                ? 'cursor-pointer'
-                : 'cursor-pointer shadow-lg hover:shadow-xl active:scale-95 hover:brightness-110'
+          className={`rounded-full flex items-center justify-center font-bold text-white select-none transition-all duration-200 border-2 border-white/20 ${
+            isWrong
+              ? 'cursor-pointer'
+              : 'cursor-pointer shadow-lg hover:shadow-xl active:scale-95 hover:brightness-110'
           }`}
           style={{
             width: `${radius * 2}px`,
             height: `${radius * 2}px`,
             fontSize: `${radius * 0.6}px`,
-            backgroundColor: isCompleted ? '#16a34a' : isWrong ? '#ef4444' : color,
+            backgroundColor: isWrong ? '#ef4444' : color,
           }}
         >
-          {isCompleted ? '✓' : number}
+          {number}
         </button>
       </div>
     </div>

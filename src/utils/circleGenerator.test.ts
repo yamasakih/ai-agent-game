@@ -44,12 +44,12 @@ describe('generateCircles', () => {
     }
   })
 
-  it('半径が24〜48の範囲内である', () => {
+  it('半径が20〜56の範囲内である', () => {
     for (let i = 0; i < 50; i++) {
       const circles = generateCircles(10)
       for (const circle of circles) {
-        expect(circle.radius).toBeGreaterThanOrEqual(24)
-        expect(circle.radius).toBeLessThanOrEqual(48)
+        expect(circle.radius).toBeGreaterThanOrEqual(20)
+        expect(circle.radius).toBeLessThanOrEqual(56)
       }
     }
   })

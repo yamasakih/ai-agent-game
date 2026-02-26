@@ -16,14 +16,14 @@ export interface ExclusionZone {
   yMax: number
 }
 
-const MIN_RADIUS = 24
-const MAX_RADIUS = 48
+const MIN_RADIUS = 20
+const MAX_RADIUS = 56
 // 円の数字が読めるよう端から少しマージンを確保
 const POSITION_X_MIN = 3
 const POSITION_X_MAX = 97
 const POSITION_Y_MIN = 6
 const POSITION_Y_MAX = 94
-const CANDIDATE_COUNT = 20
+const CANDIDATE_COUNT = 6
 
 function randomInRange(min: number, max: number): number {
   return min + Math.random() * (max - min)

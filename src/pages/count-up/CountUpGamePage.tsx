@@ -121,6 +121,7 @@ export function CountUpGamePage() {
             y={circle.y}
             radius={circle.radius}
             color={circle.color}
+            zIndex={circles.length - circle.number + 1}
             state={circleStates[circle.number]}
             onTap={handleTap}
           />
