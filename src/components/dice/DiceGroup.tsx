@@ -12,16 +12,9 @@ interface DiceGroupProps {
   animationKey: number
 }
 
-const MODEL_HEX_COLORS: Record<ModelName, string> = {
-  Human: '#6b7280',
-  Opus: '#9333ea',
-  Sonnet: '#2563eb',
-  Haiku: '#16a34a',
-}
-
 export function DiceGroup({ model, dice, diceSize, isRolling, animationKey }: DiceGroupProps) {
   const config = DICE_ROLL_MODEL_CONFIGS[model]
-  const hexColor = MODEL_HEX_COLORS[model]
+  const hexColor = config.hexColor
 
   return (
     <div className="flex flex-col items-center gap-1">

@@ -112,6 +112,7 @@ export interface DiceRollModelConfig {
   name: ModelName
   color: string
   textColor: string
+  hexColor: string
   diceType: DiceType
   faces: number
   minCount: number
@@ -123,6 +124,7 @@ export const DICE_ROLL_MODEL_CONFIGS: Record<ModelName, DiceRollModelConfig> = {
     name: 'Human',
     color: 'bg-gray-500',
     textColor: 'text-gray-300',
+    hexColor: '#6b7280',
     diceType: 'd10',
     faces: 10,
     minCount: 0,
@@ -132,6 +134,7 @@ export const DICE_ROLL_MODEL_CONFIGS: Record<ModelName, DiceRollModelConfig> = {
     name: 'Opus',
     color: 'bg-purple-600',
     textColor: 'text-purple-400',
+    hexColor: '#9333ea',
     diceType: 'd20',
     faces: 20,
     minCount: 0,
@@ -141,6 +144,7 @@ export const DICE_ROLL_MODEL_CONFIGS: Record<ModelName, DiceRollModelConfig> = {
     name: 'Sonnet',
     color: 'bg-blue-600',
     textColor: 'text-blue-400',
+    hexColor: '#2563eb',
     diceType: 'd8',
     faces: 8,
     minCount: 0,
@@ -150,6 +154,7 @@ export const DICE_ROLL_MODEL_CONFIGS: Record<ModelName, DiceRollModelConfig> = {
     name: 'Haiku',
     color: 'bg-green-600',
     textColor: 'text-green-400',
+    hexColor: '#16a34a',
     diceType: 'd6',
     faces: 6,
     minCount: 0,

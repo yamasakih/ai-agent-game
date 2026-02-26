@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { MODEL_ORDER, DICE_ROLL_MODEL_CONFIGS } from '../../constants'
 import type { ModelName } from '../../constants'
@@ -26,17 +26,21 @@ export function DiceRollGamePage() {
   )
   const [isRolling, setIsRolling] = useState(true)
   const [animationKey, setAnimationKey] = useState(0)
+  const rollTimerRef = useRef<ReturnType<typeof setTimeout>>(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsRolling(false), 800)
-    return () => clearTimeout(timer)
+    rollTimerRef.current = setTimeout(() => setIsRolling(false), 800)
+    return () => {
+      if (rollTimerRef.current) clearTimeout(rollTimerRef.current)
+    }
   }, [])
 
   const handleRoll = useCallback(() => {
+    if (rollTimerRef.current) clearTimeout(rollTimerRef.current)
     setIsRolling(true)
     setAnimationKey((k) => k + 1)
     setResults(rollAllDice(selections, DICE_ROLL_MODEL_CONFIGS))
-    setTimeout(() => setIsRolling(false), 800)
+    rollTimerRef.current = setTimeout(() => setIsRolling(false), 800)
   }, [selections])
 
   const total = calculateTotal(results)

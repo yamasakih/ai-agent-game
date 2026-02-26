@@ -4,11 +4,9 @@ import { MODEL_ORDER, DICE_ROLL_MODEL_CONFIGS } from '../../constants'
 import type { ModelName } from '../../constants'
 import { ModelRow } from '../../components/ModelRow'
 
-const DICE_LABELS: Record<string, string> = {
-  Human: 'd10 (10面)',
-  Opus: 'd20 (20面)',
-  Sonnet: 'd8 (8面)',
-  Haiku: 'd6 (6面)',
+function getDiceLabel(model: ModelName): string {
+  const config = DICE_ROLL_MODEL_CONFIGS[model]
+  return `${config.diceType} (${config.faces}面)`
 }
 
 export function DiceRollSetupPage() {
@@ -57,7 +55,7 @@ export function DiceRollSetupPage() {
                   {model}
                 </span>
                 <span className="text-gray-500">—</span>
-                <span>{DICE_LABELS[model]}</span>
+                <span>{getDiceLabel(model)}</span>
               </div>
             ))}
           </div>
