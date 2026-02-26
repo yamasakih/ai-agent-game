@@ -67,21 +67,24 @@ export function DiceCube({ value, size, color, isRolling, animationKey }: DiceCu
   })
 
   return (
-    <div style={{ width: size, height: size, perspective: size * 4 }}>
-      <div
-        key={animationKey}
-        className={isRolling ? 'animate-dice-tumble-3d' : 'animate-dice-land'}
-        style={{
-          width: size,
-          height: size,
-          position: 'relative',
-          transformStyle: 'preserve-3d',
-          transition: isRolling ? 'none' : undefined,
-          transform: isRolling ? undefined : `rotateX(${rx}deg) rotateY(${ry}deg)`,
-          ['--land-rx' as string]: `${rx}deg`,
-          ['--land-ry' as string]: `${ry}deg`,
-        }}
-      >
+    <div
+      key={animationKey}
+      className={isRolling ? '' : 'animate-dice-land'}
+      style={{ width: size, height: size }}
+    >
+      <div style={{ width: size, height: size, perspective: size * 4, overflow: 'hidden' }}>
+        <div
+          className={isRolling ? 'animate-dice-tumble-3d' : ''}
+          style={{
+            width: size,
+            height: size,
+            position: 'relative',
+            transformStyle: 'preserve-3d',
+            transform: `rotateX(${rx}deg) rotateY(${ry}deg)`,
+            ['--land-rx' as string]: `${rx}deg`,
+            ['--land-ry' as string]: `${ry}deg`,
+          }}
+        >
         {/* Front - 1 */}
         <div style={faceStyle(`translateZ(${half}px)`)}>
           <PipFace value={1} size={size} />
@@ -105,6 +108,7 @@ export function DiceCube({ value, size, color, isRolling, animationKey }: DiceCu
         {/* Bottom - 4 */}
         <div style={faceStyle(`rotateX(-90deg) translateZ(${half}px)`)}>
           <PipFace value={4} size={size} />
+        </div>
         </div>
       </div>
     </div>
