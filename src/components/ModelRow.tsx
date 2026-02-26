@@ -1,7 +1,7 @@
-import type { ModelConfig, CountUpModelConfig } from '../constants'
+import type { ModelConfig, CountUpModelConfig, DiceRollModelConfig } from '../constants'
 
 interface ModelRowProps {
-  config: ModelConfig | CountUpModelConfig
+  config: ModelConfig | CountUpModelConfig | DiceRollModelConfig
   selectedCount: number
   onSelect: (count: number) => void
 }
