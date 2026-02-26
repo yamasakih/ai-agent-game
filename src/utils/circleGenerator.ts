@@ -9,8 +9,8 @@ export interface CircleData {
 
 const MIN_RADIUS = 24
 const MAX_RADIUS = 48
-const POSITION_MIN = -10
-const POSITION_MAX = 110
+const POSITION_MIN = 0
+const POSITION_MAX = 100
 const CANDIDATE_COUNT = 20
 
 function randomInRange(min: number, max: number): number {
