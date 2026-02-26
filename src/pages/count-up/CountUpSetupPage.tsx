@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MODEL_ORDER, MODEL_CONFIGS, DEFAULT_DURATION, MIN_DURATION, MAX_DURATION } from '../constants'
-import type { ModelName } from '../constants'
-import { ModelRow } from '../components/ModelRow'
+import { MODEL_ORDER, COUNT_UP_MODEL_CONFIGS, DEFAULT_DURATION, MIN_DURATION, MAX_DURATION } from '../../constants'
+import type { ModelName } from '../../constants'
+import { ModelRow } from '../../components/ModelRow'
 
-export function TopPage() {
+export function CountUpSetupPage() {
   const navigate = useNavigate()
   const [selections, setSelections] = useState<Record<ModelName, number>>({
     Human: 1,
@@ -18,27 +18,24 @@ export function TopPage() {
     setSelections((prev) => ({ ...prev, [model]: count }))
   }
 
-  const hasAtLeastOneModel =
-    selections.Opus > 0 || selections.Sonnet > 0 || selections.Haiku > 0
-
   const handleStart = () => {
     const params = new URLSearchParams()
     for (const model of MODEL_ORDER) {
       params.set(model, String(selections[model]))
     }
     params.set('duration', String(duration))
-    navigate(`/number-reading/game?${params.toString()}`)
+    navigate(`/count-up/game?${params.toString()}`)
   }
 
   return (
     <div className="min-h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4">
-      <h1 className="text-xl font-bold mb-4">Number Challenge</h1>
+      <h1 className="text-xl font-bold mb-4">Count Up Challenge</h1>
       <div className="flex items-center gap-8">
         <div className="flex flex-col gap-2">
           {MODEL_ORDER.map((model) => (
             <ModelRow
               key={model}
-              config={MODEL_CONFIGS[model]}
+              config={COUNT_UP_MODEL_CONFIGS[model]}
               selectedCount={selections[model]}
               onSelect={(count) => handleSelect(model, count)}
             />
@@ -57,7 +54,7 @@ export function TopPage() {
               step={1}
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              className="w-full accent-amber-500"
+              className="w-full accent-cyan-500"
             />
             <div className="flex justify-between text-xs text-gray-500">
               <span>{MIN_DURATION}s</span>
@@ -67,12 +64,7 @@ export function TopPage() {
 
           <button
             onClick={handleStart}
-            disabled={!hasAtLeastOneModel}
-            className={`px-8 py-2 rounded-xl text-lg font-bold transition-all duration-200 ${
-              hasAtLeastOneModel
-                ? 'bg-amber-500 hover:bg-amber-400 text-black shadow-lg hover:shadow-xl cursor-pointer'
-                : 'bg-gray-700 text-gray-500 cursor-not-allowed'
-            }`}
+            className="px-8 py-2 rounded-xl text-lg font-bold transition-all duration-200 bg-cyan-500 hover:bg-cyan-400 text-black shadow-lg hover:shadow-xl cursor-pointer"
           >
             Start
           </button>

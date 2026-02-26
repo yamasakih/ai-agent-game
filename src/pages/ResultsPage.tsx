@@ -33,7 +33,7 @@ export function ResultsPage() {
   const numbers = parseNumbers(location.state)
 
   if (numbers === null) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/number-reading" replace />
   }
 
   const grouped = MODEL_ORDER.map((model) => ({
@@ -46,7 +46,7 @@ export function ResultsPage() {
   })).filter((group) => group.values.length > 0)
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-full bg-gray-900 text-white flex flex-col items-center justify-center p-4">
       <h1 className="text-2xl font-bold mb-8">Results</h1>
 
       <div className="flex flex-col gap-6 mb-8 w-full max-w-md">
@@ -73,7 +73,7 @@ export function ResultsPage() {
         onClick={() => navigate('/')}
         className="px-8 py-3 rounded-xl text-lg font-bold bg-gray-700 hover:bg-gray-600 text-white transition-all duration-200 cursor-pointer"
       >
-        Back
+        Home
       </button>
     </div>
   )
